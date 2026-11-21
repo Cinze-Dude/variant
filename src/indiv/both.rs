@@ -10,4 +10,11 @@ impl<T, U> Variant<T, U> {
             Second(v) => Some(v.into()),
         }
     }
+
+    pub fn as_ref(&self) -> Variant<&T, &U> {
+        match self {
+            First(x) => Variant::First(x),
+            Second(x) => Variant::Second(x),
+        }
+    }
 }

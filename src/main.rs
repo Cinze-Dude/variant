@@ -5,5 +5,5 @@ fn main() {
 
     let var: Variant<&str, &str> = Variant::from_any("56").unwrap();
 
-    println!("{:?}", var.collapse())
+    println!("{:?}", var.collapse());
 }
