@@ -1,13 +1,8 @@
 use crate::variant::Variant::{self, First, Second};
 
 impl<T, U> Variant<T, U> {
-    // First Functions
     pub fn into_first(self) -> Option<T> {
         if let First(v) = self { Some(v) } else { None }
-    }
-
-    pub fn unwrap_first(self) -> T {
-        self.into_first().unwrap()
     }
 
     pub fn as_first(&self) -> Option<&T> {
@@ -22,9 +17,31 @@ impl<T, U> Variant<T, U> {
         matches!(self, First(_))
     }
 
+    pub fn unwrap_first(self) -> T {
+        self.into_first().unwrap()
+    }
+
+    pub fn unwrap_first_or(self, value: T) -> T {
+        self.into_first().unwrap_or(value)
+    }
+
+    pub fn unwrap_first_or_default(self) -> T
+    where
+        T: Default,
+    {
+        self.into_first().unwrap_or_default()
+    }
+
+    pub fn unwrap_first_or_else<F>(self, op: F) -> T
+    where
+        F: Fn() -> T,
+    {
+        self.into_first().unwrap_or_else(op)
+    }
+
     pub fn map_first<O, F>(self, op: F) -> Variant<O, U>
     where
-        F: Fn(T) -> O,
+        F: FnOnce(T) -> O,
     {
         match self {
             First(x) => First(op(x)),
