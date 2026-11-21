@@ -7,7 +7,5 @@ fn main() {
 
     let fold = var.fold(|x| x.len(), |x| x as usize);
 
-    Option::and_then(self, f)
-
     println!("{:?}", fold);
 }

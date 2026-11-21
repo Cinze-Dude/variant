@@ -35,4 +35,15 @@ impl<T, U> Variant<T, U> {
             Second(x) => Variant::Second(x),
         }
     }
+
+    pub fn map<F, S, X, Y>(self, f: F, s: S) -> Variant<X, Y>
+    where
+        F: FnOnce(T) -> X,
+        S: FnOnce(U) -> Y,
+    {
+        match self {
+            First(x) => First(f(x)),
+            Second(x) => Second(s(x)),
+        }
+    }
 }
