@@ -1,4 +1,4 @@
-use crate::variant::Variant::{self, First, Second};
+use crate::variant::Variant::{self, First};
 
 impl<T, U> Variant<T, U> {
     // First Functions
