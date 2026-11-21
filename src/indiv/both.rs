@@ -11,6 +11,13 @@ impl<T, U> Variant<T, U> {
         }
     }
 
+    pub fn flip(self) -> Variant<U, T> {
+        match self {
+            First(x) => Second(x),
+            Second(x) => First(x),
+        }
+    }
+
     pub fn as_ref(&self) -> Variant<&T, &U> {
         match self {
             First(x) => Variant::First(x),
