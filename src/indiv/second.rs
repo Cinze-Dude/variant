@@ -34,7 +34,7 @@ impl<T, U> Variant<T, U> {
 
     pub fn unwrap_second_or_else<F>(self, op: F) -> U
     where
-        F: Fn() -> U,
+        F: FnOnce() -> U,
     {
         self.into_second().unwrap_or_else(op)
     }
@@ -45,6 +45,27 @@ impl<T, U> Variant<T, U> {
     {
         match self {
             First(x) => First(x),
+            Second(x) => Second(op(x)),
+        }
+    }
+
+    pub fn map_second_or<O, F>(self, op: F, default: T) -> Variant<T, O>
+    where
+        F: FnOnce(U) -> O,
+    {
+        match self {
+            First(_) => First(default),
+            Second(x) => Second(op(x)),
+        }
+    }
+
+    pub fn map_second_or_else<O, F, D>(self, op: F, default: D) -> Variant<T, O>
+    where
+        F: FnOnce(U) -> O,
+        D: FnOnce() -> T,
+    {
+        match self {
+            First(_) => First(default()),
             Second(x) => Second(op(x)),
         }
     }
