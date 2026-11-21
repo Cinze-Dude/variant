@@ -1,4 +1,4 @@
-use crate::variant::Variant::{self, First};
+use crate::variant::Variant::{self, First, Second};
 
 impl<T, U> Variant<T, U> {
     // First Functions
@@ -20,5 +20,15 @@ impl<T, U> Variant<T, U> {
 
     pub fn is_first(&self) -> bool {
         matches!(self, First(_))
+    }
+
+    pub fn map_first<O, F>(self, op: F) -> Variant<O, U>
+    where
+        F: Fn(T) -> O,
+    {
+        match self {
+            First(x) => First(op(x)),
+            Second(x) => Second(x),
+        }
     }
 }
