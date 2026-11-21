@@ -1,3 +1,4 @@
+pub mod and_then;
 pub mod both;
 pub mod expect;
 pub mod map;
